@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Page</title>
+  <style>
+    :root { --bg: #fafaf7; --text: #1f2328; --muted: #656d76; --accent: #2f6feb; --card: #ffffff; --border: #e4e4e0; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0d1117; --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff; --card: #161b22; --border: #30363d; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text);
+           font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; }
+    main { max-width: 720px; margin: 0 auto; padding: 48px 16px; }
+    h1 { font-size: 2.2rem; margin: 0 0 4px; }
+    .subtitle { color: var(--muted); margin: 0 0 40px; }
+    section { background: var(--card); border: 1px solid var(--border);
+              border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
+    h2 { margin-top: 0; font-size: 1.2rem; }
+    a { color: var(--accent); }
+    footer { color: var(--muted); font-size: 0.9rem; margin-top: 40px; text-align: center; }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- ✏️ Edit the title and subtitle -->
+    <h1>Our Page</h1>
+    <p class="subtitle">Made by [Your Name] &amp; [Friend's Name]</p>
+
+    <!-- ✏️ Each <section> is a box. Copy one to add more. -->
+    <section>
+      <h2>About</h2>
+      <p>Write what this page is about here.</p>
+    </section>
+
+    <section>
+      <h2>[Your Name]'s corner</h2>
+      <p>Your stuff goes here.</p>
+    </section>
+
+    <section>
+      <h2>[Friend's Name]'s corner</h2>
+      <p>Their stuff goes here.</p>
+    </section>
+
+    <section>
+      <h2>Links</h2>
+      <ul>
+        <li><a href="https://example.com">A cool link</a></li>
+      </ul>
+    </section>
+
+    <footer>Last updated by whoever edited it last 🙂</footer>
+  </main>
+</body>
+</html>
