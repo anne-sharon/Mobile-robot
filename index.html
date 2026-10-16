@@ -3,55 +3,139 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MoBot navigation and docking using ArUco tag</title>
+  <title>MoBot ArUco Docking</title>
+  <!-- Nunito Sans is a free backup font that looks close to Avenir Next on computers that don't have it -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root { --bg: #fafaf7; --text: #1f2328; --muted: #656d76; --accent: #2f6feb; --card: #ffffff; --border: #e4e4e0; }
-    @media (prefers-color-scheme: dark) {
-      :root { --bg: #0d1117; --text: #e6edf3; --muted: #8b949e; --accent: #58a6ff; --card: #161b22; --border: #30363d; }
+    :root {
+      --burgundy: #4a0f1f;
+      --burgundy-deep: #2e0812;
+      --burgundy-soft: #6b1a2e;
+      --cream: #f6eee9;
+      --card: #fffaf7;
+      --text: #2a1418;
+      --muted: #7a5a60;
+      --border: #ead9d3;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text);
-           font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; }
-    main { max-width: 720px; margin: 0 auto; padding: 48px 16px; }
-    h1 { font-size: 2.2rem; margin: 0 0 4px; }
-    .subtitle { color: var(--muted); margin: 0 0 40px; }
-    section { background: var(--card); border: 1px solid var(--border);
-              border-radius: 10px; padding: 20px 24px; margin-bottom: 20px; }
-    h2 { margin-top: 0; font-size: 1.2rem; }
-    a { color: var(--accent); }
-    footer { color: var(--muted); font-size: 0.9rem; margin-top: 40px; text-align: center; }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--text);
+      font-family: "Avenir Next", "Avenir", "Nunito Sans", system-ui, sans-serif;
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(160deg, var(--burgundy-deep), var(--burgundy) 60%, var(--burgundy-soft));
+      color: var(--cream);
+      padding: 72px 16px 64px;
+      text-align: center;
+    }
+    header .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid rgba(246, 238, 233, 0.4);
+      border-radius: 999px;
+      padding: 4px 14px;
+      margin-bottom: 18px;
+    }
+    header h1 {
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      font-weight: 700;
+      margin: 0 auto 14px;
+      max-width: 760px;
+      line-height: 1.2;
+    }
+    header p { margin: 0; opacity: 0.85; }
+    main { max-width: 820px; margin: 0 auto; padding: 48px 16px; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.35rem;
+      color: var(--burgundy);
+    }
+    h3 { margin: 0 0 4px; color: var(--burgundy); font-size: 1.1rem; }
+    .id { color: var(--muted); font-size: 0.9rem; margin: 0 0 12px; }
+    .team { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .member {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 5px solid var(--burgundy);
+      border-radius: 12px;
+      padding: 22px 24px;
+    }
+    .member ul { margin: 0; padding-left: 20px; }
+    .placeholder { color: var(--muted); font-style: italic; }
+    footer {
+      background: var(--burgundy-deep);
+      color: var(--cream);
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 640px) {
+      .team { grid-template-columns: 1fr; }
+      section, .member { padding: 20px; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <!-- ✏️ Edit the title and subtitle -->
-    <h1>Our Page</h1>
-    <p class="subtitle">Made by [Your Name] &amp; [Friend's Name]</p>
+  <header>
+    <div class="tag">Project</div>
+    <h1>MoBot Navigation and Docking Using ArUco Tags</h1>
+    <p>Anne &amp; Vishnu</p>
+  </header>
 
-    <!-- ✏️ Each <section> is a box. Copy one to add more. -->
+  <main>
     <section>
       <h2>About</h2>
-      <p>Write what this page is about here.</p>
+      <p>This page shows our understanding of the MoBot navigation and docking project and the outputs we produced along the way.</p>
+    </section>
+
+    <h2>Who's doing what</h2>
+    <div class="team">
+      <div class="member">
+        <h3>Anne</h3>
+        <p class="id">Student ID: 26202693</p>
+        <ul>
+          <li>Project overview and background</li>
+          <li>Camera calibration</li>
+          <li>ArUco tag detection and pose estimation</li>
+        </ul>
+      </div>
+      <div class="member">
+        <h3>Vishnu</h3>
+        <p class="id">Student ID: 26224699</p>
+        <ul>
+          <li>Robot navigation and control</li>
+          <li>Docking approach and alignment</li>
+          <li>Testing and results</li>
+        </ul>
+      </div>
+    </div>
+    <br>
+
+    <section>
+      <h2>Our understanding</h2>
+      <p class="placeholder">Explain how the system works here: how the camera spots the ArUco tag, how the robot works out where the tag is, and how it uses that to drive in and dock.</p>
     </section>
 
     <section>
-      <h2>[Your Name]'s corner</h2>
-      <p>Your stuff goes here.</p>
+      <h2>Output and results</h2>
+      <p class="placeholder">Add what you achieved here: screenshots, test results, what worked and what didn't.</p>
     </section>
-
-    <section>
-      <h2>[Friend's Name]'s corner</h2>
-      <p>Their stuff goes here.</p>
-    </section>
-
-    <section>
-      <h2>Links</h2>
-      <ul>
-        <li><a href="https://example.com">A cool link</a></li>
-      </ul>
-    </section>
-
-    <footer>Last updated by whoever edited it last 🙂</footer>
   </main>
+
+  <footer>
+    Anne (26202693) &amp; Vishnu (26224699) · MoBot Navigation and Docking
+  </footer>
 </body>
 </html>
