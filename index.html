@@ -125,13 +125,13 @@
 
     <section>
       <h2>Our understanding</h2>
-      <p class="placeholder">Explain how the system works here: how the camera spots the ArUco tag, how the robot works out where the tag is, and how it uses that to drive in and dock.</p>
-    </section>
-
-    <section>
-      <h2>Output and results</h2>
-      <p class="placeholder">Add what you achieved here: screenshots, test results, what worked and what didn't.</p>
-    </section>
+      <p>The goal is for MoBot to find its docking station on its own and drive into it accurately. To do this, an ArUco tag (a black-and-white square marker, like a simple QR code) is placed on the dock, and the robot uses its camera to locate it.</p>
+      <p><strong>1. Camera calibration.</strong> The camera is calibrated first so we know its focal length and lens distortion. Without this, the robot can't accurately judge distances from the image.</p>
+      <p><strong>2. Tag detection.</strong> Each camera frame is processed (using OpenCV's ArUco library) to find the tag's four corners and read its ID, so the robot knows it's looking at the right marker.</p>
+      <p><strong>3. Pose estimation.</strong> Using the corners, the known tag size and the calibration, we calculate where the tag is relative to the camera: how far away it is, how far left or right, and what angle it's facing.</p>
+      <p><strong>4. Navigation.</strong> The robot turns and drives to reduce the sideways offset and angle error, using a controller (e.g. PID) to keep the motion smooth instead of jerky.</p>
+      <p><strong>5. Docking.</strong> As it gets close, the robot slows down and makes fine adjustments so it lines up straight with the dock, stopping once it reaches the target distance.</p>
+   </section>
   </main>
 
   <footer>
