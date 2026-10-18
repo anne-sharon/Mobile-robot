@@ -22,8 +22,20 @@ def wrap(a):
     return (a + math.pi) % (2 * math.pi) - math.pi
 
 @dataclass
+class Dock:
+    """The dock as the estimator believes it is, in the estimator frame (from marker sightings only)."""
+    x: float                           # marker centre
+    y: float
+    nx: float                          # unit normal pointing OUT of the marker, into the room
+    ny: float
+    sightings: int = 0
+
+@dataclass
 class Plan:
     """What the planner hands to the controller."""
-    mode: str = "idle"                 # idle | search | approach | dock | done
-    target_xy: tuple | None = None     # in the estimator frame, or None
+    mode: str = "idle"                 # idle | search | explore | approach | align | dock | done
+    target_xy: tuple | None = None     # drive to this point (estimator frame), or None
+    heading: float | None = None       # turn on the spot to this heading [rad], or None
+    spin: float = 0.0                  # turn on the spot at this rate [rad/s] (searching)
+    max_speed: float = 0.20            # forward speed limit for this step [m/s]
     done: bool = False
