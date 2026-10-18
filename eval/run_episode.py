@@ -16,7 +16,7 @@ def sense(sim, tick, last):
         last = dict(lidar=s.lidar(), image=s.camera())
     return dict(t=sim.time, encoders=s.encoders(), imu=s.imu(), **last), last
 
-def run_episode(max_time=60.0, seed=0, out="eval/results/episode.csv"):
+def run_episode(max_time=120.0, seed=0, out="eval/results/episode.csv"):
     sim = Sim(seed=seed)
     cal = sim.sensors.calibration            # datasheet-style constants; no pose in here
     estimator, planner, controller = Estimator(cal), Planner(cal), Controller(cal)
@@ -26,7 +26,7 @@ def run_episode(max_time=60.0, seed=0, out="eval/results/episode.csv"):
     while sim.time < max_time:
         obs, last = sense(sim, tick, last)               # 1. sense
         pose = estimator.update(obs)                     # 2. estimate
-        plan = planner.update(pose, obs)                 # 3. plan
+        plan = planner.update(pose, obs, estimator.dock)  # 3. plan
         v, w = controller.update(pose, plan)             # 4. control
         truth.record(sim.time, pose, (v, w))             # (evaluation only)
         if plan.done:
@@ -39,4 +39,4 @@ def run_episode(max_time=60.0, seed=0, out="eval/results/episode.csv"):
     return truth.summary()
 
 if __name__ == "__main__":
-    print(run_episode(max_time=float(sys.argv[1]) if len(sys.argv) > 1 else 60.0))
+    print(run_episode(max_time=float(sys.argv[1]) if len(sys.argv) > 1 else 120.0))
