@@ -16,6 +16,9 @@ BOXES = [  # name, (x, y), half-sizes (x, y, z), yaw [deg], rgba   (0.4 m tall -
     ("box2", ( 0.1,  0.55), (0.25, 0.15, 0.20), -15, (0.20, 0.35, 0.85, 1)),
     ("box3", ( 1.2, -0.15), (0.15, 0.15, 0.20),  35, (0.25, 0.70, 0.30, 1)),
 ]
+# --- living-room furniture (solid down to the floor, so the LiDAR sees them) ---
+SOFA  = dict(pos=(-1.3, 1.55), half=(0.90, 0.35, 0.40), rgba=(0.45, 0.30, 0.22, 1))   # 1.8 m x 0.7 m, 0.8 m tall
+TABLE = dict(pos=(-1.3, 0.75), radius=0.30, half_h=0.225, rgba=(0.62, 0.45, 0.30, 1))  # 0.6 m wide, 0.45 m tall
 
 # --- charging station: back plate on the east wall, facing west (-x), marker on its face ---
 DOCK_Y       = 0.30
@@ -94,6 +97,13 @@ def build_xml(use_meshes):
         f'<geom name="{n}" type="box" pos="{x} {y} {h[2]}" size="{h[0]} {h[1]} {h[2]}" '
         f'euler="0 0 {yaw}" rgba="{" ".join(map(str, c))}"/>'
         for n, (x, y), h, yaw, c in BOXES)
+    rgba = lambda c: " ".join(map(str, c))
+    sx, sy = SOFA["pos"]; shx, shy, shz = SOFA["half"]
+    tx, ty = TABLE["pos"]
+    furniture_xml = (
+        f'<geom name="sofa" type="box" pos="{sx} {sy} {shz}" size="{shx} {shy} {shz}" rgba="{rgba(SOFA["rgba"])}"/>'
+        f'<geom name="coffee_table" type="cylinder" pos="{tx} {ty} {TABLE["half_h"]}" '
+        f'size="{TABLE["radius"]} {TABLE["half_h"]}" rgba="{rgba(TABLE["rgba"])}"/>')
 
     if use_meshes:
         asset_mesh = "".join(f'<mesh name="{n[:-4]}" file="{n}" scale="0.001 0.001 0.001"/>' for n in _MESHES)
@@ -131,6 +141,7 @@ def build_xml(use_meshes):
     <geom name="floor" type="plane" size="{ROOM_X} {ROOM_Y} 0.1" material="floor_mat"/>
     {wall_xml}
     {box_xml}
+    {furniture_xml}
 
     <!-- charging station: back plate + printed marker sheet + floor decal -->
     <geom name="dock_plate" type="box" pos="{DOCK_FACE_X + .01} {DOCK_Y} .15" size=".01 .15 .15" rgba=".25 .27 .30 1"/>
