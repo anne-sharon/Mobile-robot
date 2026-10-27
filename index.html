@@ -139,7 +139,7 @@
 
     <section>
       <h2>Our understanding</h2>
-      <p>MoBot is a simulated TurtleBot3 Burger (a small two-wheeled robot) in a 6 m &times; 4 m room built in MuJoCo, a physics simulator. The room has three boxes in the way and a charging dock on one wall with an ArUco tag on it. The robot starts somewhere in the room, often facing away from the dock, and has to find the dock and park in front of it on its own.</p>
+      <p>MoBot is a simulated TurtleBot3 Burger (a small two-wheeled robot) in a 6 m &times; 4 m room built in MuJoCo, a physics simulator. The room has three boxes, a sofa and a round coffee table in the way, and a charging dock on one wall with an ArUco tag on it. The robot starts somewhere in the room, often facing away from the dock, and has to find the dock and park in front of it on its own.</p>
       <p>The robot is only allowed to use its own sensors: a front camera, a 360&deg; LiDAR, wheel encoders and a gyro. It is never told where it is, so everything it knows has to be worked out from these readings.</p>
       <p>Each control step (20 times a second) goes through the same loop: <strong>sense &rarr; estimate &rarr; plan &rarr; control</strong>.</p>
       <ol class="steps">
@@ -147,8 +147,8 @@
         <li><strong>Knowing where it is (estimator).</strong> The wheel encoders measure how far the robot has driven and the gyro measures how much it has turned. Adding these up gives the robot's position. We first used the wheels for turning too, but they slip slightly when spinning on the spot, which made the heading drift by about 6&deg; per spin, so we switched to the gyro. Every sighting of the tag updates where the robot thinks the dock is, with close-up sightings trusted more than far-away ones.</li>
         <li><strong>Deciding what to do (planner).</strong> The robot works through these stages:
           <br><em>Search:</em> spin on the spot looking for the tag.
-          <br><em>Explore:</em> if a box blocks the view, drive to a new open spot (chosen from the LiDAR) and search again.
-          <br><em>Approach:</em> drive to a point 0.8 m straight out from the dock. The LiDAR checks the path ahead and steers around any box in the way.
+          <br><em>Explore:</em> if something blocks the view, drive to a new open spot (chosen from the LiDAR) and search again.
+          <br><em>Approach:</em> drive to a point 0.8 m straight out from the dock. The LiDAR checks the path ahead and steers around any box or furniture in the way.
           <br><em>Align:</em> turn on the spot to face the dock square-on.
           <br><em>Dock:</em> creep in along the dock's centre line, slowing down, and stop 0.35 m from the tag.</li>
         <li><strong>Driving (controller).</strong> The plan is turned into a forward speed and a turning speed. The robot turns towards its target and only drives forward once it is roughly facing it, which keeps the path smooth.</li>
@@ -157,27 +157,27 @@
 
     <section>
       <h2>Output and results</h2>
-      <p>The robot parked successfully from every starting position we tested, without touching any box or wall.</p>
+      <p>The robot parked successfully from every starting position we tested, without touching any box, furniture or wall.</p>
       <div class="stats">
         <div class="stat"><b>20 / 20</b><span>runs parked</span></div>
         <div class="stat"><b>0</b><span>collisions</span></div>
         <div class="stat"><b>0.6 cm</b><span>average position error</span></div>
-        <div class="stat"><b>1.1&deg;</b><span>average angle error</span></div>
+        <div class="stat"><b>1.3&deg;</b><span>average angle error</span></div>
       </div>
       <figure>
-        <img src="docking_path.png" alt="Overhead view of the room showing the robot's path from the start, around the boxes, to the dock, next to the robot's camera view of the ArUco tag when parked">
-        <figcaption>Left: the robot's path from the default start, coloured by stage. The red box blocks the view at first, so it explores, spots the tag, steers between the boxes and docks. Right: what the camera sees once parked.</figcaption>
+        <img src="docking_path.png" alt="Overhead view of the room showing the robot's path from the start, around the boxes and furniture, to the dock, next to the robot's camera view of the ArUco tag when parked">
+        <figcaption>Left: the robot's path from the default start, coloured by stage. The red box blocks its view of the dock at first, so it explores, spots the tag, drives between the coffee table and the boxes, and docks. Right: what the camera sees once parked.</figcaption>
       </figure>
       <table>
         <tr><th>Measure</th><th>Target</th><th>Default start</th><th>Worst of 20 runs</th></tr>
         <tr><td>Parking position error</td><td>&le; 5 cm</td><td>0.4 cm</td><td>1.4 cm</td></tr>
-        <tr><td>Parking angle error</td><td>&le; 5&deg;</td><td>0.7&deg;</td><td>3.6&deg;</td></tr>
-        <tr><td>Time to park</td><td>&ndash;</td><td>52 s</td><td>83 s</td></tr>
+        <tr><td>Parking angle error</td><td>&le; 5&deg;</td><td>0.1&deg;</td><td>3.4&deg;</td></tr>
+        <tr><td>Time to park</td><td>&ndash;</td><td>56 s</td><td>90 s</td></tr>
       </table>
       <p><strong>What we fixed along the way</strong></p>
       <ul>
         <li><strong>Twisting at the end:</strong> at first the robot aimed at a point right under its nose as it arrived, so it twisted and parked 19&deg; crooked. Aiming at a point 25 cm ahead along the dock's centre line fixed it.</li>
-        <li><strong>Heading drift:</strong> switching from wheel-based to gyro-based turning cut the position estimate error from about 30 cm to about 8 cm.</li>
+        <li><strong>Heading drift:</strong> switching from wheel-based to gyro-based turning cut the position estimate error from about 30 cm to under 15 cm.</li>
         <li><strong>Bad tag readings:</strong> from 5 m away, one tag reading came back invalid and crashed the run. The estimator now ignores readings like that.</li>
       </ul>
       <p>To reproduce these results, open <code>notebooks/run_docking.ipynb</code> in Google Colab and run the cells in order.</p>
