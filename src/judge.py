@@ -36,6 +36,10 @@ class Judge:
         self._renderer.update_scene(self._sim.data, camera="topdown")
         return self._renderer.render().copy()
 
+    def close(self):
+        if self._renderer is not None:
+            self._renderer.close(); self._renderer = None
+
     def world_to_px(self, x, y, width=1200, height=800):
         """Floor-level world point -> pixel in render_topdown()."""
         f = (height / 2) / math.tan(math.radians(TOP_FOVY) / 2)

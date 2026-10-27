@@ -5,6 +5,7 @@
   approach -> marker seen: drive to a point straight out in front of the dock, avoiding boxes
   align    -> turn on the spot to face the dock square-on
   dock     -> creep in along the dock's centre line until the robot is PARK_DIST from the marker
+  square_up-> turn on the spot to face the dock exactly
   done     -> parked
 """
 import math
@@ -121,7 +122,7 @@ class Planner:
         if self.mode == "approach":
             pre = (mx + PRE_DOCK * nx, my + PRE_DOCK * ny)
             on_line = abs(lateral) < 0.04 and PARK_DIST < along < PRE_DOCK + 0.1
-            if on_line or math.hypot(pre[0] - x, pre[1] - y) < 0.08:
+            if on_line or math.hypot(pre[0] - x, pre[1] - y) < 0.05:
                 self.mode = "align"
             else:
                 sub = self._safe_goal(pose, pts, pre)
@@ -137,14 +138,22 @@ class Planner:
                 self.mode = "approach"
                 return Plan(mode="approach")
             remaining = along - PARK_DIST
-            if remaining <= 0.003:
-                self.mode = "done"
-                return Plan(mode="done", done=True)
-            # follow the centre line: always aim at a point 0.25 m further along it (even past the parking
-            # spot), so the robot keeps pointing at the dock instead of twisting towards a point under its nose
-            ahead = along - 0.25
-            target = (mx + ahead * nx, my + ahead * ny)
-            speed = float(np.clip(0.6 * remaining, 0.02, 0.12))
-            return Plan(mode="dock", target_xy=target, max_speed=speed)
+            if remaining > 0.003:
+                # follow the centre line: always aim at a point 0.25 m further along it (even past the parking
+                # spot), so the robot keeps pointing at the dock instead of twisting towards a point under its nose
+                ahead = along - 0.25
+                target = (mx + ahead * nx, my + ahead * ny)
+                speed = float(np.clip(0.6 * remaining, 0.02, 0.12))
+                return Plan(mode="dock", target_xy=target, max_speed=speed,
+                            line_from=(mx + PRE_DOCK * nx, my + PRE_DOCK * ny))   # track the dock's centre line
+            self.mode = "square_up"
+
+        if self.mode == "square_up":
+            # the line tracker can arrive with a small heading error (it trades heading for sideways error at
+            # low speed); turn on the spot to face the dock square-on, which doesn't move the position
+            if abs(wrap(face - th)) > math.radians(1):
+                return Plan(mode="square_up", heading=face)
+            self.mode = "done"
+            return Plan(mode="done", done=True)
 
         return Plan(mode="done", done=True)

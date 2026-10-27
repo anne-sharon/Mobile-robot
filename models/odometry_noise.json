@@ -1,0 +1,11 @@
+{
+  "model": "per 0.05 s step: var_ds = (k_ds*ds)^2 + floor_ds^2,  var_dth = (k_dth*dth)^2 + floor_dth^2",
+  "k_ds": 0.0,
+  "floor_ds": 0.0002247540602255684,
+  "k_dth": 0.06687494944429805,
+  "floor_dth": 0.0011542670018128212,
+  "rms_err_ds_mm_per_step": 0.20733019010972722,
+  "rms_err_dth_deg_per_step": 0.10059267926846811,
+  "steps": 3778,
+  "episodes": 5
+}

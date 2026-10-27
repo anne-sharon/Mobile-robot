@@ -28,7 +28,7 @@ def run_episode(max_time=120.0, seed=0, out="eval/results/episode.csv"):
         pose = estimator.update(obs)                     # 2. estimate
         plan = planner.update(pose, obs, estimator.dock)  # 3. plan
         v, w = controller.update(pose, plan)             # 4. control
-        truth.record(sim.time, pose, (v, w))             # (evaluation only)
+        truth.record(sim.time, pose, (v, w), estimator.frame, estimator.P)  # (evaluation only)
         if plan.done:
             break
         sim.drive(v, w, CONTROL_DT)                      # 5. step the simulator

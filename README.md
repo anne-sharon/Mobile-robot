@@ -1,7 +1,45 @@
-# MoBot Navigation and Docking Using ArUco Tags
+# MoBot: Visual Navigation and Docking with an EKF and LQR
 
-This repository holds our project page, which shows our understanding of the project and the outputs we produced.
+41014 Sensors and Control in Mechatronics Systems, Integrated Project, **Track A (mobile robot)**, Group [number].
+
+A simulated TurtleBot3 Burger (MuJoCo) crosses a room with obstacles, finds the charging dock marked with an ArUco tag, and parks in front of it. It uses only its camera, LiDAR, wheel encoders and gyro.
+
+**Project page:** https://anne-sharon.github.io/Mobile-robot/ (state-space model, frame diagram, EKF and LQR design with parameter values, results, video, contributions, AI declaration)
+
+## Run it
+
+**Colab:** open [`notebooks/run_docking.ipynb`](https://colab.research.google.com/github/anne-sharon/Mobile-robot/blob/main/notebooks/run_docking.ipynb) and choose *Runtime → Run all*.
+
+**Locally** (Python 3.10+):
+
+```bash
+pip install -r requirements.txt
+python -m eval.run_episode            # one scored docking run
+python -m eval.make_video push        # video: true pose vs EKF estimate and uncertainty (nominal | push | occlusion | ...)
+python -m eval.run_batch              # robustness study: 6 conditions x 20 start poses
+pytest tests                          # unit tests
+```
+
+The calibration and noise parameters in `models/` are regenerated with `python -m eval.calibrate_camera`, `eval.characterise_camera`, `eval.characterise_odometry` and `eval.tune_ekf`.
+
+## Layout
+
+| Path | What it is |
+|---|---|
+| `src/world.py` | Simulator: room, furniture, dock + ArUco marker, TurtleBot3, sensors |
+| `src/model.py` | State-space models, Jacobians, controllability/observability, LQR |
+| `src/marker.py` | ArUco detection and pose (camera → robot frame) |
+| `src/estimator.py` | EKF (odometry + gyro prediction, ArUco pose update, χ² gating) |
+| `src/planner.py` | Search, explore, LiDAR obstacle avoidance, approach, align, dock, square-up |
+| `src/control.py` | Gain-scheduled LQR line tracker |
+| `src/judge.py`, `eval/` | Ground truth, scoring, plots, videos, studies (**evaluation only**) |
+| `models/` | Camera calibration and noise models loaded by the robot |
+| `tests/` | Unit tests |
+
+**Ground truth rule:** the robot code (`estimator.py`, `planner.py`, `control.py`, `marker.py`, `model.py`, `contracts.py`) never imports `judge.py` or anything in `eval/`. The controller acts on the EKF estimate only.
 
 ## Team
-- **Anne** (26202693): project overview and page, ArUco tag detection and pose estimation, robot and dock estimation
-- **Vishnu** (26224699): planner (search, obstacle avoidance, docking), controller, testing and results
+- **Anne** (26202693)
+- **Vishnu** (26224699)
+
+Contributions and the generative AI declaration are on the project page.

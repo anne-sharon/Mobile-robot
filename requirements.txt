@@ -1,5 +1,9 @@
-   mujoco
-   numpy
-   opencv-python
-   control
-   matplotlib
+mujoco
+numpy
+scipy
+opencv-python
+matplotlib
+imageio
+imageio-ffmpeg
+control
+pytest

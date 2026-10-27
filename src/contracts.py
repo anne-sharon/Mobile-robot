@@ -1,6 +1,7 @@
 """Shared conventions for the robot-side files: estimator.py, planner.py, control.py, marker.py.
 
-Estimator frame: origin = where the robot started, +x = start heading, +y = left, z up.
+Estimator frame: the START frame (origin = where the robot started, +x = start heading, +y = left) until the marker
+  is first seen, then the DOCK frame (origin = marker centre, +x out of the marker into the room, +y to its left).
 Pose = np.array([x, y, theta]); metres, metres, radians; theta CCW from +x, wrapped to [-pi, pi).
 Robot frame:  x forward, y left (origin at the wheel-axle midpoint).
 Camera frame (OpenCV): x right, y down, z forward.   Camera sits 0.04 m ahead of the robot origin.
@@ -38,4 +39,5 @@ class Plan:
     heading: float | None = None       # turn on the spot to this heading [rad], or None
     spin: float = 0.0                  # turn on the spot at this rate [rad/s] (searching)
     max_speed: float = 0.20            # forward speed limit for this step [m/s]
+    line_from: tuple | None = None     # start of the reference line the controller tracks to target_xy, or None
     done: bool = False
