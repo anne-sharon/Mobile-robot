@@ -35,15 +35,12 @@ def stats(rows):
 
 
 def table(all_stats):
-    h = ("<table><tr><th>Condition</th><th>Parked</th><th>Parking error (mean / worst)</th>"
-         "<th>Heading error (mean / worst)</th><th>Estimate error near dock / final</th><th>NEES</th>"
-         "<th>Time</th></tr>")
+    h = ("<table><tr><th>Condition</th><th>Parked</th><th>Parking error, mean / worst</th>"
+         "<th>Estimate error near dock</th><th>NEES</th></tr>")
     for c in CONDITIONS:
         s = all_stats[c]
-        dist = "" if c in ("nominal", "gyro_noise", "camera_noise") else f" <span class='muted'>({s['disturbed']}/{s['n']} disturbed)</span>"
-        h += (f"<tr><td>{LABELS[c]}{dist}</td><td>{s['parked']}/{s['n']}</td>"
-              f"<td>{s['pos']:.1f} / {s['pos_w']:.1f} cm</td><td>{s['head']:.1f} / {s['head_w']:.1f}&deg;</td>"
-              f"<td>{s['near']:.1f} cm / {s['fin']:.1f} mm</td><td>{s['nees']:.1f}</td><td>{s['time']:.0f} s</td></tr>")
+        h += (f"<tr><td>{LABELS[c]}</td><td>{s['parked']}/{s['n']}</td>"
+              f"<td>{s['pos']:.1f} / {s['pos_w']:.1f} cm</td><td>{s['near']:.1f} cm</td><td>{s['nees']:.1f}</td></tr>")
     return h + "</table>"
 
 
