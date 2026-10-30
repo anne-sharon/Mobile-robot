@@ -1,7 +1,7 @@
 """Fill the numbers on the project page from the result files (so every number on the page comes from the code).
 Run from the repo root after eval.run_batch and eval.tune_ekf:  python -m eval.build_page
-Reads page_template.html, writes index.html."""
-import csv, math, os
+Reads eval/page_template.html, writes index.html."""
+import csv, os
 import numpy as np
 from eval.run_batch import CONDITIONS
 from src.estimator import Q_SCALE, R_SCALE
@@ -47,7 +47,7 @@ def table(all_stats):
     return h + "</table>"
 
 
-def build(template="page_template.html", out="index.html", subs=None):
+def build(template="eval/page_template.html", out="index.html", subs=None):
     all_stats = {c: stats(load(c)) for c in CONDITIONS}
     tune = list(csv.DictReader(open("eval/results/ekf_tuning.csv")))
     chosen = [r for r in tune if float(r["q_scale"]) == Q_SCALE and float(r["r_scale"]) == R_SCALE][0]

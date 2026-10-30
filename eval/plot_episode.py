@@ -1,12 +1,11 @@
 """Run one episode and draw the robot's path on the overhead view (evaluation only).
 Run from the repo root:  python -m eval.plot_episode
 Saves eval/results/docking_path.png"""
-import os, math
-import numpy as np
+import os
 import matplotlib
 import matplotlib.pyplot as plt
 from src.world import Sim, PARK_POSE
-from src.contracts import CONTROL_DT, SENSE_EVERY
+from src.contracts import CONTROL_DT
 from src.estimator import Estimator
 from src.planner import Planner
 from src.control import Controller

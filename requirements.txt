@@ -5,5 +5,4 @@ opencv-python
 matplotlib
 imageio
 imageio-ffmpeg
-control
 pytest
