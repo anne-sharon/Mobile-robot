@@ -1,19 +1,19 @@
 """Run one episode and draw the robot's path on the overhead view (evaluation only).
 Run from the repo root:  python -m eval.plot_episode
 Saves eval/results/docking_path.png"""
-import os, math
-import numpy as np
+import os
 import matplotlib
 import matplotlib.pyplot as plt
 from src.world import Sim, PARK_POSE
-from src.contracts import CONTROL_DT, SENSE_EVERY
+from src.contracts import CONTROL_DT
 from src.estimator import Estimator
 from src.planner import Planner
 from src.control import Controller
 from src.judge import Judge
 from eval.run_episode import sense
 
-COLOURS = dict(search="#b0b0b0", explore="#e0a030", approach="#3070d0", align="#a040c0", dock="#30a050")
+COLOURS = dict(search="#b0b0b0", explore="#e0a030", approach="#3070d0", align="#a040c0", dock="#30a050",
+               square_up="#106030")
 
 def run_and_plot(max_time=120.0, out="eval/results/docking_path.png"):
     sim = Sim()
@@ -55,6 +55,7 @@ def run_and_plot(max_time=120.0, out="eval/results/docking_path.png"):
     plt.savefig(out, dpi=110, bbox_inches="tight")
     if matplotlib.get_backend().lower() != "agg":
         plt.show()
+    judge.close(); sim.close()
     return err
 
 if __name__ == "__main__":

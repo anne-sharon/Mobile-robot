@@ -257,6 +257,10 @@ class Sim:
         self.sensors = Sensors(self, lidar_noise, seed)
         self.reset(*start)
 
+    def close(self):
+        """Free the offscreen renderers (lets many episodes run in one Python session)."""
+        self.sensors._cam_renderer.close()
+
     @property
     def time(self):
         return self.data.time

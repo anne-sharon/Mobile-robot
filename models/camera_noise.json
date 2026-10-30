@@ -1,0 +1,24 @@
+{
+  "bias_model": "bias(d) = c * d^2, subtracted from every measurement (d = distance to marker, m)",
+  "bias_c": {
+    "ahead": 0.007546333151481004,
+    "left": -0.0004076662829330023,
+    "angle": -0.0014044093900675036
+  },
+  "sigma_model": "sigma(d) = a + b * d^2  (after bias correction)",
+  "ahead": {
+    "a": 0.0001,
+    "b": 0.004233510981967804
+  },
+  "left": {
+    "a": 0.0001,
+    "b": 0.0019189496313831717
+  },
+  "angle": {
+    "a": 0.002012116908063434,
+    "b": 0.007400545531434475
+  },
+  "angle_outlier_rate": 0.04,
+  "samples": 400,
+  "note": "angle errors > 15 deg are the planar-marker pose ambiguity (IPPE flip); the EKF rejects them with a chi-square gate instead of inflating R for every measurement"
+}

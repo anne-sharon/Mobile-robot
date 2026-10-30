@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="Nunito Sans, Avenir Next, sans-serif" font-size="13">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="context-stroke"/></marker>
+  </defs>
+  <rect x="1" y="1" width="758" height="398" rx="10" fill="#fffaf7" stroke="#ead9d3"/>
+  <!-- room -->
+  <rect x="40" y="40" width="560" height="320" fill="#f6eee9" stroke="#b9a8a2" stroke-width="2"/>
+  <text x="48" y="58" fill="#7a5a60">room 6 m × 4 m (top view)</text>
+  <!-- world frame -->
+  <g stroke="#555" stroke-width="2"><line x1="320" y1="200" x2="370" y2="200" marker-end="url(#a)"/><line x1="320" y1="200" x2="320" y2="150" marker-end="url(#a)"/></g>
+  <circle cx="320" cy="200" r="3" fill="#555"/>
+  <text x="374" y="204" fill="#555">x</text><text x="314" y="144" fill="#555">y</text>
+  <text x="240" y="222" fill="#555">world (simulator, evaluation only)</text>
+  <!-- dock + marker -->
+  <rect x="592" y="150" width="8" height="40" fill="#3a3f46"/>
+  <rect x="586" y="160" width="6" height="20" fill="#111"/>
+  <g stroke="#4a0f1f" stroke-width="2.5"><line x1="586" y1="170" x2="526" y2="170" marker-end="url(#a)"/><line x1="586" y1="170" x2="586" y2="218" marker-end="url(#a)"/></g>
+  <text x="508" y="166" fill="#4a0f1f" font-weight="700">x_d</text><text x="592" y="230" fill="#4a0f1f" font-weight="700">y_d</text>
+  <text x="612" y="140" fill="#4a0f1f" font-weight="700">dock frame</text>
+  <text x="612" y="156" fill="#4a0f1f">origin: marker centre</text>
+  <text x="612" y="172" fill="#4a0f1f">x_d: out of the marker</text>
+  <text x="612" y="188" fill="#4a0f1f">EKF + planner frame</text>
+  <text x="612" y="204" fill="#4a0f1f">after the first fix</text>
+  <!-- start frame -->
+  <g stroke="#a07020" stroke-width="2"><line x1="120" y1="290" x2="90" y2="263" marker-end="url(#a)"/><line x1="120" y1="290" x2="93" y2="320" marker-end="url(#a)"/></g>
+  <circle cx="120" cy="290" r="3" fill="#a07020"/>
+  <text x="70" y="258" fill="#a07020">x_s</text><text x="70" y="334" fill="#a07020">y_s</text>
+  <text x="132" y="286" fill="#a07020" font-weight="700">start frame</text>
+  <text x="132" y="302" fill="#a07020">(start pose; EKF frame</text>
+  <text x="132" y="318" fill="#a07020">before the marker is seen)</text>
+  <!-- robot -->
+  <g transform="translate(450,285) rotate(-18)">
+    <rect x="-22" y="-18" width="36" height="36" rx="6" fill="#d9d3d0" stroke="#666"/>
+    <g stroke="#2a52a0" stroke-width="2.5"><line x1="0" y1="0" x2="52" y2="0" marker-end="url(#a)"/><line x1="0" y1="0" x2="0" y2="-46" marker-end="url(#a)"/></g>
+    <circle cx="10" cy="0" r="3" fill="#2f8a50"/>
+    <circle cx="-8" cy="0" r="5" fill="none" stroke="#333"/>
+  </g>
+  <text x="506" y="262" fill="#2a52a0" font-weight="700">x_b</text>
+  <text x="418" y="236" fill="#2a52a0" font-weight="700">y_b</text>
+  <text x="300" y="322" fill="#2a52a0" font-weight="700">base (robot): x forward, y left</text>
+  <text x="300" y="338" fill="#2f8a50">green dot = camera, 4 cm ahead of the axle</text>
+  <text x="300" y="354" fill="#555">circle = LiDAR, 3.2 cm behind the axle</text>
+  <!-- camera inset -->
+  <g transform="translate(620,250)">
+    <text x="0" y="0" fill="#2f8a50" font-weight="700">camera (OpenCV)</text>
+    <text x="0" y="16" fill="#2f8a50">z forward = x_b</text>
+    <text x="0" y="32" fill="#2f8a50">x right = −y_b</text>
+    <text x="0" y="48" fill="#2f8a50">y down = −z</text>
+    <text x="0" y="72" fill="#555">marker in base frame:</text>
+    <text x="0" y="88" fill="#555">ahead = 0.04 + z_c</text>
+    <text x="0" y="104" fill="#555">left = −x_c</text>
+  </g>
+</svg>
