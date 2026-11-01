@@ -84,7 +84,25 @@ def error_panel(hist, t_now, width, events=()):
     return panel
 
 
-def make_video(condition="nominal", start=None, out=None, max_time=150.0, every=2, fps=30):
+CAPTION_H = 64
+
+
+def caption_strip(captions, t, width):
+    """Two lines explaining what the robot is doing at time t (and why)."""
+    strip = np.full((CAPTION_H, width, 3), 255, np.uint8)
+    cv2.rectangle(strip, (0, 0), (width, CAPTION_H), (246, 238, 233), -1)
+    for t0, t1, line1, line2 in captions:
+        if t0 <= t < t1:
+            when = f"{t0:.1f}-{t1:.1f} s" if t1 < 900 else f"from {t0:.1f} s"
+            cv2.putText(strip, f"{when}   {line1}", (12, 26), cv2.FONT_HERSHEY_SIMPLEX, 0.72,
+                        (74, 15, 31), 2, cv2.LINE_AA)
+            cv2.putText(strip, line2, (12, 52), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (60, 40, 45), 1, cv2.LINE_AA)
+            break
+    return strip
+
+
+def make_video(condition="nominal", start=None, out=None, max_time=150.0, every=2, fps=30, captions=None):
+    """captions: optional list of (t_start, t_end, line 1, line 2) shown in a strip under the views."""
     from eval.run_batch import make_hooks
     out = out or f"eval/results/docking_{condition}.mp4"
     obs_hook, step_hook = make_hooks(condition, 0)
@@ -141,7 +159,11 @@ def make_video(condition="nominal", start=None, out=None, max_time=150.0, every=
                 res = detect_marker(cam, est.K, cal["marker"], est.dist)
                 if res is not None:
                     cv2.polylines(cam, [res[0].astype(np.int32)], True, (0, 220, 0), 3)
-            frame = np.vstack([np.hstack([top, cam]), error_panel(hist, sim.time, TOP_W + CAM_W, events)])
+            parts = [np.hstack([top, cam])]
+            if captions:
+                parts.append(caption_strip(captions, sim.time, TOP_W + CAM_W))
+            parts.append(error_panel(hist, sim.time, TOP_W + CAM_W, events))
+            frame = np.vstack(parts)
             cv2.rectangle(frame, (0, 0), (frame.shape[1], 36), BG, -1)
             sd = math.hypot(r["sd_x"], r["sd_y"])
             label = (f"{condition}   t = {sim.time:4.1f} s   stage: {plan.mode:9s}  frame: {est.frame:5s}  "

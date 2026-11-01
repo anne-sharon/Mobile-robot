@@ -16,6 +16,7 @@ A simulated TurtleBot3 Burger (MuJoCo) crosses a room with obstacles, finds the 
 pip install -r requirements.txt
 python -m eval.run_episode            # one scored docking run
 python -m eval.make_video push        # video: true pose vs EKF estimate and uncertainty (nominal | push | occlusion | ...)
+python -m eval.explained_video        # the default run with a caption explaining every movement
 python -m eval.run_batch              # robustness study: 6 conditions x 20 start poses
 pytest tests                          # unit tests
 ```
