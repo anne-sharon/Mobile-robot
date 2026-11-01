@@ -1,20 +1,12 @@
-"""Calibrate the robot's camera with a checkerboard (Zhang's method), like you would a real Pi camera.
-Run from the repo root:  python -m eval.calibrate_camera
-Writes models/camera_calibration.json, which estimator.py loads instead of the datasheet camera matrix.
-
-A separate MuJoCo scene holds a camera with the same resolution and field of view as the robot's front camera
-and a printed checkerboard that is moved to many random poses in front of it. OpenCV finds the inner corners in
-each image and cv2.calibrateCamera solves for the focal lengths, principal point and lens distortion.
-"""
 import os, json, math
 import numpy as np, cv2, mujoco
 from src.world import CAM_W, CAM_H, CAM_FOVY, camera_intrinsics
 
-ROWS, COLS, SQUARE = 6, 9, 0.025        # inner corners, square size [m]
+ROWS, COLS, SQUARE = 6, 9, 0.025        
 
 
 def board_png(px=60):
-    img = np.full(((ROWS + 3) * px, (COLS + 3) * px), 255, np.uint8)          # 1-square white margin
+    img = np.full(((ROWS + 3) * px, (COLS + 3) * px), 255, np.uint8)          
     for r in range(ROWS + 1):
         for c in range(COLS + 1):
             if (r + c) % 2 == 0:
