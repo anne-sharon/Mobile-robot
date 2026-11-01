@@ -1,6 +1,6 @@
 # MoBot: Visual Navigation and Docking with an EKF and LQR
 
-41014 Sensors and Control in Mechatronics Systems, Integrated Project, **Track A (mobile robot)**, Group [number].
+41014 Sensors and Control in Mechatronics Systems, Integrated Project, **Track A (mobile robot)**. Anne (26202693) and Vishnu (26224699).
 
 A simulated TurtleBot3 Burger (MuJoCo) crosses a room with obstacles, finds the charging dock marked with an ArUco tag, and parks in front of it. It uses only its camera, LiDAR, wheel encoders and gyro.
 
