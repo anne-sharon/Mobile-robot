@@ -113,7 +113,7 @@
 </head>
 <body>
   <header>
-    <div class="tag">41014 Sensors and Control · Track A · Group [number]</div>
+    <div class="tag">41014 Sensors and Control · Integrated Project · Track A</div>
     <h1>MoBot: Visual Navigation and Docking with an EKF and LQR</h1>
     <p>Anne (26202693) &amp; Vishnu (26224699)</p>
     <p class="links"><a href="https://github.com/anne-sharon/Mobile-robot">Code on GitHub</a> ·
@@ -225,16 +225,16 @@
         <div class="member">
           <h3>Anne</h3>
           <p class="id">Student ID: 26202693</p>
-          <p>Set up the GitHub repository, the Colab environment and this project page. Ran, checked and uploaded the pipeline. Asked for and reviewed the AI-assisted estimator (EKF), camera calibration and sensor noise characterisation (src/estimator.py, src/marker.py, eval/calibrate_camera.py, eval/characterise_*.py). <em>[Edit to match what you actually did.]</em></p>
+          <p>Set up the GitHub repository, the project page and the Colab environment (16 Oct). Defined the project with Claude and directed the AI-assisted development of the EKF, camera calibration, sensor noise characterisation, LQR controller and robustness study; reviewed the results and integrated the code into this repository. Presents sensing and estimation in the viva.</p>
         </div>
         <div class="member">
           <h3>Vishnu</h3>
           <p class="id">Student ID: 26224699</p>
-          <p>Built the simulation framework: the TurtleBot3 dock room scene and sensors (src/world.py, first built in a Colab notebook), the ground-truth judge and episode loop (src/judge.py, eval/run_episode.py, eval/truth_logger.py), and the marker detection test (tests/test_marker_detection.py). <em>[Edit to match what you actually did.]</em></p>
+          <p>Built the simulation framework the project runs on (18 Oct): the TurtleBot3 dock room and its sensors (src/world.py), ArUco marker detection (src/marker.py), the interfaces between the robot modules (src/contracts.py), the ground-truth judge and episode loop used for evaluation (src/judge.py, eval/run_episode.py, eval/truth_logger.py), and the marker detection test (tests/test_marker_detection.py). Presents the model, control and results in the viva.</p>
         </div>
       </div>
       <h3 style="margin-top:20px">Generative AI declaration</h3>
-      <p><strong>Tool:</strong> Claude (Anthropic), via claude.ai. <strong>Purpose:</strong> Claude was used throughout the project. It wrote the code for the EKF (src/estimator.py), the state-space model and controllability/observability analysis (src/model.py), the planner (src/planner.py), the LQR controller (src/control.py), the camera calibration and noise characterisation, the EKF tuning sweep, the robustness study, the video and plotting scripts, and the unit tests in tests/test_model_ekf.py. It also drafted the text of this page. We gave the task and requirements, ran and checked the code and results in Colab, and asked Claude to explain each design choice. All numbers and plots on this page were produced by running the code in this repository. <em>[Edit to match how you actually used it.]</em></p>
+      <p><strong>Tool:</strong> Claude (Anthropic), via claude.ai. <strong>Purpose:</strong> Claude was used throughout the project. It wrote the code for the state-space model and analysis (src/model.py), the EKF (src/estimator.py), the planner (src/planner.py), the LQR controller (src/control.py), the camera calibration and noise characterisation, the EKF tuning sweep, the robustness study, the video, screenshot and plotting scripts, and the unit tests in tests/test_model_ekf.py, and it drafted the text of this page and our viva study notes. It also committed this work to the repository through pull requests, which we reviewed and merged. We set the task and requirements, chose what to change, and asked Claude to explain each design choice. All numbers and plots on this page were produced by running the code in this repository.</p>
     </section>
 
     <section id="refs">
@@ -254,7 +254,7 @@
   </main>
 
   <footer>
-    Group [number] · Anne (26202693) &amp; Vishnu (26224699) · 41014 Sensors and Control in Mechatronics Systems
+    Anne (26202693) &amp; Vishnu (26224699) · 41014 Sensors and Control in Mechatronics Systems
   </footer>
 </body>
 </html>
