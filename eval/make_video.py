@@ -84,7 +84,8 @@ def error_panel(hist, t_now, width, events=()):
     return panel
 
 
-def make_video(condition="nominal", start=None, out=None, max_time=150.0, every=2, fps=30):
+def make_video(condition="nominal", start=None, out=None, max_time=150.0, every=2, fps=None):
+    fps = fps or round(1 / (every * CONTROL_DT))     # real time: 1 s of simulation = 1 s of video
     from eval.run_batch import make_hooks
     out = out or f"eval/results/docking_{condition}.mp4"
     obs_hook, step_hook = make_hooks(condition, 0)
